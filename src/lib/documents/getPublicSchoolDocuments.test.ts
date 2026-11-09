@@ -1,27 +1,16 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { getPublicSchoolDocuments } from "./getPublicSchoolDocuments";
 
-const mockSelect = vi.fn();
-const mockEqSchool = vi.fn();
+const mockEq = vi.fn();
 const mockOrder = vi.fn();
 
 vi.mock("@/lib/supabase", () => ({
   createSupabaseServerClient: vi.fn(async () => ({
     from: vi.fn(() => ({
-      select: mockSelect.mockReturnValue({
-        eq: mockEqSchool.mockReturnValue({ order: mockOrder }),
+      select: vi.fn(() => ({
+        eq: mockEq.mockReturnValue({ eq: mockEq, order: mockOrder }),
         order: mockOrder,
-      }),
-    })),
-  })),
-  createSupabaseAdminClient: vi.fn(() => ({
-    from: vi.fn(() => ({
-      select: vi.fn().mockReturnValue({
-        eq: vi.fn().mockReturnValue({
-          order: vi.fn().mockResolvedValue({ data: [], error: null }),
-        }),
-        order: vi.fn().mockResolvedValue({ data: [], error: null }),
-      }),
+      })),
     })),
   })),
 }));
@@ -34,10 +23,10 @@ describe("getPublicSchoolDocuments", () => {
   it("returns an empty array when schoolId is missing", async () => {
     const result = await getPublicSchoolDocuments(null);
     expect(result).toEqual([]);
-    expect(mockSelect).not.toHaveBeenCalled();
+    expect(mockEq).not.toHaveBeenCalled();
   });
 
-  it("queries published documents for the specified school and maps URLs", async () => {
+  it("queries only published, public documents and maps URLs", async () => {
     const fakeDocs = [
       {
         id: "doc-1",
@@ -60,7 +49,8 @@ describe("getPublicSchoolDocuments", () => {
 
     const result = await getPublicSchoolDocuments("school-123");
 
-    expect(mockEqSchool).toHaveBeenCalledWith("status", "published");
+    expect(mockEq).toHaveBeenNthCalledWith(1, "status", "published");
+    expect(mockEq).toHaveBeenNthCalledWith(2, "visibility", "public");
     expect(mockOrder).toHaveBeenCalledWith("created_at", { ascending: false });
     expect(result).toHaveLength(1);
     expect(result[0]?.file_url).toBe("/api/documents/doc-1/preview");

@@ -36,6 +36,8 @@ export async function dispatchModuleNotification({
   entityId?: string | null;
   skipThrottle?: boolean;
 }): Promise<DispatchNotificationResult> {
+  if (!schoolId) return { delivered: 0 };
+
   const uniqueUserIds = Array.from(new Set(recipientUserIds.filter(Boolean)));
   if (!uniqueUserIds.length) return { delivered: 0 };
 
@@ -59,7 +61,7 @@ export async function dispatchModuleNotification({
       allowedIds.map((userId) =>
         createNotificationRecord(adminClient, {
           userId,
-        schoolId: null,
+          schoolId,
           type,
           title,
           body,
