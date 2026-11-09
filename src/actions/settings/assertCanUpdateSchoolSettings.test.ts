@@ -34,6 +34,7 @@ describe("assertCanUpdateSchoolSettings", () => {
 
   it("allows platform owner and returns resolved school id", async () => {
     vi.mocked(isCurrentUserPlatformOwner).mockResolvedValue(true);
+    vi.mocked(getFirstActiveSchoolId).mockResolvedValue("sch-1");
     const targetId = await assertCanUpdateSchoolSettings(baseProfile, null);
     expect(targetId).toBe("sch-1");
   });
@@ -49,21 +50,24 @@ describe("assertCanUpdateSchoolSettings", () => {
     vi.mocked(isCurrentUserPlatformOwner).mockResolvedValue(false);
     vi.mocked(getFirstActiveSchoolId).mockResolvedValue(null);
 
-    await expect(
-      assertCanUpdateSchoolSettings(baseProfile, null),
-    ).rejects.toThrow(/No target school specified/);
+    await expect(assertCanUpdateSchoolSettings(baseProfile, null)).rejects.toThrow(
+      /No target school specified/,
+    );
   });
 
   it("uses the singleton school for a non-owner", async () => {
     vi.mocked(isCurrentUserPlatformOwner).mockResolvedValue(false);
+    vi.mocked(getFirstActiveSchoolId).mockResolvedValue("sch-first");
+    vi.mocked(hasPermission).mockResolvedValue(true);
 
-    await expect(assertCanUpdateSchoolSettings(baseProfile, "sch-diff")).rejects.toThrow(
-      /Cannot manage a different school/,
-    );
+    const targetId = await assertCanUpdateSchoolSettings(baseProfile, "sch-diff");
+
+    expect(targetId).toBe("sch-first");
   });
 
   it("throws ForbiddenError when user lacks settings.school.update permission", async () => {
     vi.mocked(isCurrentUserPlatformOwner).mockResolvedValue(false);
+    vi.mocked(getFirstActiveSchoolId).mockResolvedValue("sch-1");
     vi.mocked(hasPermission).mockResolvedValue(false);
 
     await expect(assertCanUpdateSchoolSettings(baseProfile, "sch-1")).rejects.toThrow(
@@ -73,6 +77,7 @@ describe("assertCanUpdateSchoolSettings", () => {
 
   it("returns school id when non-owner has settings.school.update permission", async () => {
     vi.mocked(isCurrentUserPlatformOwner).mockResolvedValue(false);
+    vi.mocked(getFirstActiveSchoolId).mockResolvedValue("sch-1");
     vi.mocked(hasPermission).mockResolvedValue(true);
 
     const targetId = await assertCanUpdateSchoolSettings(baseProfile, "sch-1");

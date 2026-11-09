@@ -53,8 +53,7 @@ describe("deleteSchoolDocumentAction", () => {
       data: null,
       error: { message: "Not found" },
     });
-    const mockEqSchool = vi.fn().mockReturnValue({ single: mockSingle });
-    const mockEqId = vi.fn().mockReturnValue({ eq: mockEqSchool });
+    const mockEqId = vi.fn().mockReturnValue({ single: mockSingle });
     const mockSelect = vi.fn().mockReturnValue({ eq: mockEqId });
 
     mockFrom.mockReturnValue({ select: mockSelect });
@@ -81,13 +80,11 @@ describe("deleteSchoolDocumentAction", () => {
       },
       error: null,
     });
-    const mockEqSchool = vi.fn().mockReturnValue({ single: mockSingle });
-    const mockEqId = vi.fn().mockReturnValue({ eq: mockEqSchool });
+    const mockEqId = vi.fn().mockReturnValue({ single: mockSingle });
     const mockSelect = vi.fn().mockReturnValue({ eq: mockEqId });
 
-    const mockDeleteEqSchool = vi.fn().mockResolvedValueOnce({ error: null });
-    const mockDeleteEqId = vi.fn().mockReturnValue({ eq: mockDeleteEqSchool });
-    const mockDelete = vi.fn().mockReturnValue({ eq: mockDeleteEqId });
+    const mockDeleteEq = vi.fn().mockResolvedValueOnce({ error: null });
+    const mockDelete = vi.fn().mockReturnValue({ eq: mockDeleteEq });
 
     mockFrom.mockReturnValue({
       select: mockSelect,

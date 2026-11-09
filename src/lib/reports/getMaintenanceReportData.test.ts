@@ -17,14 +17,12 @@ describe("getMaintenanceReportData", () => {
   it("throws DatabaseError when base query fails", async () => {
     const mockFrom = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({
-        eq: vi.fn().mockReturnValue({
-          order: vi.fn().mockReturnValue(
-            Promise.resolve({
-              data: null,
-              error: { message: "query timeout", code: "PGRST002" },
-            }),
-          ),
-        }),
+        order: vi.fn().mockReturnValue(
+          Promise.resolve({
+            data: null,
+            error: { message: "query timeout", code: "PGRST002" },
+          }),
+        ),
       }),
     });
 
@@ -71,14 +69,12 @@ describe("getMaintenanceReportData", () => {
 
     const mockFrom = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({
-        eq: vi.fn().mockReturnValue({
-          order: vi.fn().mockReturnValue(
-            Promise.resolve({
-              data: mockData,
-              error: null,
-            }),
-          ),
-        }),
+        order: vi.fn().mockReturnValue(
+          Promise.resolve({
+            data: mockData,
+            error: null,
+          }),
+        ),
       }),
     });
 

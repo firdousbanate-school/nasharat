@@ -40,7 +40,7 @@ describe("assertCanViewAudit", () => {
     expect(result.authorized).toBe(true);
     if (result.authorized) {
       expect(result.isOwner).toBe(true);
-      expect(result.schoolId).toBeNull();
+      expect(result.schoolId).toBe("singleton");
     }
   });
 
@@ -53,7 +53,7 @@ describe("assertCanViewAudit", () => {
     expect(result.authorized).toBe(true);
     if (result.authorized) {
       expect(result.isOwner).toBe(false);
-      expect(result.schoolId).toBe("sch-1");
+      expect(result.schoolId).toBe("singleton");
     }
   });
 

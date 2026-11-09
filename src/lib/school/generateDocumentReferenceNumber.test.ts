@@ -42,7 +42,6 @@ describe("generateDocumentReferenceNumber", () => {
 
     expect(res.refNum).toBe("CIR-2026-0002");
     expect(mockAdminRpc).toHaveBeenCalledWith("generate_school_number", {
-      p_school: "school-1",
       p_kind: "circular",
     });
   });
@@ -51,7 +50,10 @@ describe("generateDocumentReferenceNumber", () => {
     const mockSupabase = {
       rpc: vi.fn().mockResolvedValue({
         data: null,
-        error: { code: "42501", message: "An active account is required to allocate a document number" },
+        error: {
+          code: "42501",
+          message: "An active account is required to allocate a document number",
+        },
       }),
     } as unknown as SupabaseClient;
 

@@ -35,14 +35,12 @@ describe("getCircularsReportData", () => {
   it("throws DatabaseError when circulars base query fails", async () => {
     const mockFrom = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({
-        eq: vi.fn().mockReturnValue({
-          order: vi.fn().mockReturnValue(
-            Promise.resolve({
-              data: null,
-              error: { message: "connection failed", code: "PGRST000" },
-            }),
-          ),
-        }),
+        order: vi.fn().mockReturnValue(
+          Promise.resolve({
+            data: null,
+            error: { message: "connection failed", code: "PGRST000" },
+          }),
+        ),
       }),
     });
 
@@ -80,14 +78,12 @@ describe("getCircularsReportData", () => {
       if (table === "circulars") {
         return {
           select: vi.fn().mockReturnValue({
-            eq: vi.fn().mockReturnValue({
-              order: vi.fn().mockReturnValue(
-                Promise.resolve({
-                  data: mockCirculars,
-                  error: null,
-                }),
-              ),
-            }),
+            order: vi.fn().mockReturnValue(
+              Promise.resolve({
+                data: mockCirculars,
+                error: null,
+              }),
+            ),
           }),
         };
       }
@@ -128,14 +124,12 @@ describe("getCircularsReportData", () => {
       if (table === "circulars") {
         return {
           select: vi.fn().mockReturnValue({
-            eq: vi.fn().mockReturnValue({
-              order: vi.fn().mockReturnValue(
-                Promise.resolve({
-                  data: [{ id: "c1", status: "published" }],
-                  error: null,
-                }),
-              ),
-            }),
+            order: vi.fn().mockReturnValue(
+              Promise.resolve({
+                data: [{ id: "c1", status: "published" }],
+                error: null,
+              }),
+            ),
           }),
         };
       }
@@ -181,37 +175,35 @@ describe("getCircularsReportData", () => {
       if (table === "circulars") {
         return {
           select: vi.fn().mockReturnValue({
-            eq: vi.fn().mockReturnValue({
-              order: vi.fn().mockReturnValue(
-                Promise.resolve({
-                  data: [
-                    {
-                      id: "c1",
-                      ref_number: "CIR-1",
-                      title: "Published",
-                      category: "general",
-                      priority: "normal",
-                      status: "published",
-                      publish_at: null,
-                      due_at: null,
-                      created_at: "2026-01-02",
-                    },
-                    {
-                      id: "c2",
-                      ref_number: "CIR-2",
-                      title: "Draft",
-                      category: "general",
-                      priority: "normal",
-                      status: "draft",
-                      publish_at: null,
-                      due_at: null,
-                      created_at: "2026-01-01",
-                    },
-                  ],
-                  error: null,
-                }),
-              ),
-            }),
+            order: vi.fn().mockReturnValue(
+              Promise.resolve({
+                data: [
+                  {
+                    id: "c1",
+                    ref_number: "CIR-1",
+                    title: "Published",
+                    category: "general",
+                    priority: "normal",
+                    status: "published",
+                    publish_at: null,
+                    due_at: null,
+                    created_at: "2026-01-02",
+                  },
+                  {
+                    id: "c2",
+                    ref_number: "CIR-2",
+                    title: "Draft",
+                    category: "general",
+                    priority: "normal",
+                    status: "draft",
+                    publish_at: null,
+                    due_at: null,
+                    created_at: "2026-01-01",
+                  },
+                ],
+                error: null,
+              }),
+            ),
           }),
         };
       }

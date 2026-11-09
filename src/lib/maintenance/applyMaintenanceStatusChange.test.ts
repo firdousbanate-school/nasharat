@@ -24,8 +24,7 @@ describe("applyMaintenanceStatusChange", () => {
       data: [{ id: "req-1" }],
       error: null,
     });
-    const eqSchoolMock = vi.fn().mockReturnValue({ select: selectMock });
-    const eqIdMock = vi.fn().mockReturnValue({ eq: eqSchoolMock });
+    const eqIdMock = vi.fn().mockReturnValue({ select: selectMock });
     const updateMock = vi.fn().mockReturnValue({ eq: eqIdMock });
     const fromMock = vi.fn().mockReturnValue({ update: updateMock });
 
@@ -44,7 +43,7 @@ describe("applyMaintenanceStatusChange", () => {
 
     expect(fromMock).toHaveBeenCalledWith("maintenance_requests");
     expect(eqIdMock).toHaveBeenCalledWith("id", "req-1");
-    expect(eqSchoolMock).not.toHaveBeenCalledWith("tenant_id", "sch-1");
+    expect(eqIdMock).toHaveBeenCalledTimes(1);
     expect(selectMock).toHaveBeenCalledWith("id");
   });
 
@@ -53,8 +52,7 @@ describe("applyMaintenanceStatusChange", () => {
       data: [],
       error: null,
     });
-    const eqSchoolMock = vi.fn().mockReturnValue({ select: selectMock });
-    const eqIdMock = vi.fn().mockReturnValue({ eq: eqSchoolMock });
+    const eqIdMock = vi.fn().mockReturnValue({ select: selectMock });
     const updateMock = vi.fn().mockReturnValue({ eq: eqIdMock });
     const fromMock = vi.fn().mockReturnValue({ update: updateMock });
 
@@ -83,8 +81,7 @@ describe("applyMaintenanceStatusChange", () => {
       data: [{ id: "req-1" }],
       error: null,
     });
-    const eqSchoolMock = vi.fn().mockReturnValue({ select: selectMock });
-    const eqIdMock = vi.fn().mockReturnValue({ eq: eqSchoolMock });
+    const eqIdMock = vi.fn().mockReturnValue({ select: selectMock });
     const updateMock = vi.fn().mockReturnValue({ eq: eqIdMock });
     const fromMock = vi.fn().mockReturnValue({ update: updateMock });
 

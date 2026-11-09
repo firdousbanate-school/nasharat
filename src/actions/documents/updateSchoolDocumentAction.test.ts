@@ -63,13 +63,11 @@ describe("updateSchoolDocumentAction", () => {
       },
       error: null,
     });
-    const mockEqSchool = vi.fn().mockReturnValue({ single: mockSingle });
-    const mockEqId = vi.fn().mockReturnValue({ eq: mockEqSchool });
+    const mockEqId = vi.fn().mockReturnValue({ single: mockSingle });
     const mockSelect = vi.fn().mockReturnValue({ eq: mockEqId });
 
-    const mockUpdateEqSchool = vi.fn().mockResolvedValueOnce({ error: null });
-    const mockUpdateEqId = vi.fn().mockReturnValue({ eq: mockUpdateEqSchool });
-    const mockUpdate = vi.fn().mockReturnValue({ eq: mockUpdateEqId });
+    const mockUpdateEq = vi.fn().mockResolvedValueOnce({ error: null });
+    const mockUpdate = vi.fn().mockReturnValue({ eq: mockUpdateEq });
 
     mockFrom.mockImplementation((table: string) => {
       if (table === "school_documents") {
@@ -106,13 +104,11 @@ describe("updateSchoolDocumentAction", () => {
       },
       error: null,
     });
-    const mockEqSchool = vi.fn().mockReturnValue({ single: mockSingle });
-    const mockEqId = vi.fn().mockReturnValue({ eq: mockEqSchool });
+    const mockEqId = vi.fn().mockReturnValue({ single: mockSingle });
     const mockSelect = vi.fn().mockReturnValue({ eq: mockEqId });
 
-    const mockUpdateEqSchool = vi.fn().mockResolvedValueOnce({ error: null });
-    const mockUpdateEqId = vi.fn().mockReturnValue({ eq: mockUpdateEqSchool });
-    const mockUpdate = vi.fn().mockReturnValue({ eq: mockUpdateEqId });
+    const mockUpdateEq = vi.fn().mockResolvedValueOnce({ error: null });
+    const mockUpdate = vi.fn().mockReturnValue({ eq: mockUpdateEq });
 
     mockFrom.mockImplementation((table: string) => {
       if (table === "school_documents") {

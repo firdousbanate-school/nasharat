@@ -11,10 +11,9 @@ describe("saveMaintenanceAssignment", () => {
   });
 
   it("returns error and stops if deactivating prior assignments fails", async () => {
-    const eqSchoolMock = vi.fn().mockResolvedValue({
+    const eqReqMock = vi.fn().mockResolvedValue({
       error: { message: "Deactivation failed" },
     });
-    const eqReqMock = vi.fn().mockReturnValue({ eq: eqSchoolMock });
     const updateMock = vi.fn().mockReturnValue({ eq: eqReqMock });
     const insertMock = vi.fn();
 
@@ -42,14 +41,12 @@ describe("saveMaintenanceAssignment", () => {
   });
 
   it("proceeds with insert and update when deactivation succeeds", async () => {
-    const deactEqSchool = vi.fn().mockResolvedValue({ error: null });
-    const deactEqReq = vi.fn().mockReturnValue({ eq: deactEqSchool });
+    const deactEqReq = vi.fn().mockResolvedValue({ error: null });
     const deactUpdate = vi.fn().mockReturnValue({ eq: deactEqReq });
 
     const insertMock = vi.fn().mockResolvedValue({ error: null });
 
-    const reqEqSchool = vi.fn().mockResolvedValue({ error: null });
-    const reqEqId = vi.fn().mockReturnValue({ eq: reqEqSchool });
+    const reqEqId = vi.fn().mockResolvedValue({ error: null });
     const reqUpdate = vi.fn().mockReturnValue({ eq: reqEqId });
 
     const supabase = {
