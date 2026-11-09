@@ -11,6 +11,10 @@ vi.mock("@/lib/supabase", () => ({
       resetPasswordForEmail: mockResetPasswordForEmail,
     },
   }),
+  // Rate limiting falls back to the in-process counter in tests.
+  createSupabaseAdminClient: vi.fn(() => ({
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
+  })),
 }));
 
 vi.mock("@/lib/errors/sanitizeError", () => ({

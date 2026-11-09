@@ -19,7 +19,7 @@ export async function loginAction(
     if (!parsed.success) return { ok: false, error: "invalid" };
 
     const clientIp = await resolveRequestIp();
-    const isAllowed = checkAuthRateLimit({
+    const isAllowed = await checkAuthRateLimit({
       action: "login",
       ip: clientIp,
       identifier: parsed.data.email,

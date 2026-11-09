@@ -45,7 +45,7 @@ enabled = true
 file_size_limit = "10MiB"
 
 # Private buckets (doc §7). The public-assets bucket is created by migration
-# 0012; it is declared here too so a local `supabase start` matches production.
+# 0015; it is declared here too so a local `supabase start` matches production.
 [storage.buckets.circular-attachments]
 public = false
 file_size_limit = "10MiB"
@@ -62,7 +62,7 @@ file_size_limit = "5MiB"
 allowed_mime_types = ["image/jpeg", "image/png", "image/webp"]
 
 [storage.buckets.school-documents]
-public = true
+public = false
 file_size_limit = "20MiB"
 allowed_mime_types = ["image/jpeg", "image/png", "image/webp", "application/pdf"]
 

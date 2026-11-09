@@ -22,14 +22,17 @@ export type AuthRateLimitOptions = {
 /**
  * Enforces dual-key application-level rate limits (client IP and target account)
  * for sensitive authentication and platform bootstrap operations.
+ *
+ * Backed by the shared Postgres counter, so the limits hold across every
+ * serverless instance rather than per process.
  */
-export function checkAuthRateLimit(options: AuthRateLimitOptions): boolean {
+export async function checkAuthRateLimit(options: AuthRateLimitOptions): Promise<boolean> {
   const rule = RULES[options.action];
   if (!rule) {
     return true;
   }
 
-  const ipAllowed = consumeRateLimitToken(
+  const ipAllowed = await consumeRateLimitToken(
     `auth:${options.action}:ip:${options.ip}`,
     rule.ipLimit,
     rule.ipWindowMs,
@@ -40,7 +43,7 @@ export function checkAuthRateLimit(options: AuthRateLimitOptions): boolean {
 
   if (options.identifier) {
     const idKey = options.identifier.trim().toLowerCase();
-    const idAllowed = consumeRateLimitToken(
+    const idAllowed = await consumeRateLimitToken(
       `auth:${options.action}:id:${idKey}`,
       rule.idLimit,
       rule.idWindowMs,

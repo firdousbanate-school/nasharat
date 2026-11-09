@@ -31,11 +31,11 @@ function resolveClientKey(request: Request): string {
  */
 async function handleClientError(request: Request) {
   if (
-    !consumeRateLimitToken(
+    !(await consumeRateLimitToken(
       `client-error:${resolveClientKey(request)}`,
       RATE_LIMIT_PER_MINUTE,
       60_000,
-    )
+    ))
   ) {
     return new NextResponse(null, { status: 429 });
   }

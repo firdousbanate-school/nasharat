@@ -13,7 +13,9 @@ vi.mock("@/lib/supabase", () => ({
       getUser: mockGetUser,
     },
   })),
-  createSupabaseAdminClient: vi.fn(() => ({})),
+  createSupabaseAdminClient: vi.fn(() => ({
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
+  })),
 }));
 
 vi.mock("@/lib/auth/hasAnyPlatformOwner", () => ({

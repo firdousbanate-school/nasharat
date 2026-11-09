@@ -18,7 +18,7 @@ export async function claimPlatformOwnerAction(bootstrapSecret?: string): Promis
     if (userError || !userData?.user) return { ok: false, error: "unauthenticated" };
 
     const clientIp = await resolveRequestIp();
-    const isAllowed = checkAuthRateLimit({
+    const isAllowed = await checkAuthRateLimit({
       action: "owner_claim",
       ip: clientIp,
       identifier: userData.user.id,

@@ -18,7 +18,7 @@ export async function requestPasswordResetAction(
     }
 
     const clientIp = await resolveRequestIp();
-    const isAllowed = checkAuthRateLimit({
+    const isAllowed = await checkAuthRateLimit({
       action: "password_reset",
       ip: clientIp,
       identifier: email,
