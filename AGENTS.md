@@ -1,5 +1,5 @@
 # AGENTS.md — Mandatory Repository Engineering Rules
-
+kh
 These instructions are mandatory for every AI coding agent working in this repository, including Gemini CLI, Gemini Code Assist, and Antigravity.
 
 They apply to ALL activities: implementation, debugging, refactoring, testing, code reviews, database operations, security changes, documentation, and deployment.
