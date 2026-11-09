@@ -19,7 +19,7 @@ export async function updateAchievementAction(
   try {
     const profile = await getCurrentProfile();
     const data = parseAchievementFormData(formData);
-    const auth = await assertCanRegisterAchievement(profile, data.departmentId);
+    await assertCanRegisterAchievement(profile, data.departmentId);
 
     if (!data.titleAr) {
       throw new ValidationError("Achievement title in Arabic is required");
@@ -28,12 +28,7 @@ export async function updateAchievementAction(
     const supabase = await createSupabaseServerClient();
     let imagePath: string | null | undefined = undefined;
     if (data.image) {
-      const uploadRes = await uploadCalendarImage(
-        supabase,
-        data.image,
-        auth.schoolId,
-        "achievements",
-      );
+      const uploadRes = await uploadCalendarImage(supabase, data.image, "achievements");
       if (uploadRes.error) {
         throw mapDatabaseError(uploadRes.error, "Failed to upload achievement image");
       }

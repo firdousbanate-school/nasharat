@@ -20,7 +20,7 @@ export async function uploadMaintenancePhoto(
 
   const cleanName = params.photo.name.replace(/[^a-zA-Z0-9.-]/g, "_");
   const prefix = params.kind === "evidence" ? "evidence_" : "";
-  const storagePath = `${params.schoolId}/${params.requestId}/${prefix}${Date.now()}_${cleanName}`;
+  const storagePath = `${params.requestId}/${prefix}${Date.now()}_${cleanName}`;
 
   const { error: uploadError } = await supabase.storage
     .from("maintenance-photos")

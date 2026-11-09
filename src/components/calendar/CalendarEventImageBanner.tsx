@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { getPublicAssetUrl } from "@/lib/storage/getPublicAssetUrl";
 
 export function CalendarEventImageBanner({
   imagePath,
@@ -9,12 +10,13 @@ export function CalendarEventImageBanner({
   imagePath: string | null;
   altText: string;
 }) {
-  if (!imagePath) return null;
+  const src = getPublicAssetUrl(imagePath);
+  if (!src) return null;
 
   return (
     <div className="overflow-hidden rounded-lg border border-border">
       <Image
-        src={imagePath}
+        src={src}
         alt={altText}
         width={800}
         height={300}

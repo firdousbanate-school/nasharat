@@ -85,5 +85,6 @@ describe("uploadCircularDocument", () => {
 
     expect(result.error).toBeUndefined();
     expect(uploadMock).toHaveBeenCalled();
+    expect(uploadMock.mock.calls[0][0]).toMatch(/^circ-1\//);
   });
 });

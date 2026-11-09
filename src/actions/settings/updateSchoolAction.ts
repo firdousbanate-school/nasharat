@@ -30,7 +30,7 @@ export async function updateSchoolAction(formData: FormData): Promise<ActionResu
 
     const supabase = await createSupabaseServerClient();
     const logoFile = formData.get("logo") as File | null;
-    const uploadRes = await uploadSchoolLogo(supabase, targetSchoolId, logoFile);
+    const uploadRes = await uploadSchoolLogo(supabase, logoFile);
     if (uploadRes.error) {
       throw mapDatabaseError(uploadRes.error, "Failed to upload school logo");
     }

@@ -32,7 +32,7 @@ export async function updateCalendarEventAction(formData: FormData): Promise<Act
     let imagePath: string | undefined = undefined;
 
     if (data.image) {
-      const uploadRes = await uploadCalendarImage(supabase, data.image, auth.schoolId);
+      const uploadRes = await uploadCalendarImage(supabase, data.image);
       if (uploadRes.error) {
         throw mapDatabaseError(uploadRes.error, "Failed to upload calendar image");
       }

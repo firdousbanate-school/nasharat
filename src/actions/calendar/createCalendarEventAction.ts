@@ -31,7 +31,7 @@ export async function createCalendarEventAction(
     let imagePath: string | null = null;
 
     if (data.image) {
-      const uploadRes = await uploadCalendarImage(supabase, data.image, auth.schoolId);
+      const uploadRes = await uploadCalendarImage(supabase, data.image);
       if (uploadRes.error) {
         throw mapDatabaseError(uploadRes.error, "Failed to upload calendar image");
       }

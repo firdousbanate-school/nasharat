@@ -18,7 +18,7 @@ export async function uploadCircularDocument(
   }
 
   const cleanName = params.file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-  const storagePath = `${params.schoolId}/${params.circularId}/${Date.now()}_${cleanName}`;
+  const storagePath = `${params.circularId}/${Date.now()}_${cleanName}`;
 
   const { error: uploadError } = await supabase.storage
     .from("circular-attachments")

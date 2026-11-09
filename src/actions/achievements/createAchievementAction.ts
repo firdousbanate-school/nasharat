@@ -27,12 +27,7 @@ export async function createAchievementAction(
     const supabase = await createSupabaseServerClient();
     let imagePath: string | null = null;
     if (data.image) {
-      const uploadRes = await uploadCalendarImage(
-        supabase,
-        data.image,
-        auth.schoolId,
-        "achievements",
-      );
+      const uploadRes = await uploadCalendarImage(supabase, data.image, "achievements");
       if (uploadRes.error) {
         throw mapDatabaseError(uploadRes.error, "Failed to upload achievement image");
       }

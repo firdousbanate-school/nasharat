@@ -17,7 +17,7 @@ describe("uploadCalendarImage", () => {
     const { client, upload } = makeClient();
     const file = new File(["<svg/>"], "banner.svg", { type: "image/svg+xml" });
 
-    const result = await uploadCalendarImage(client, file, "school-1");
+    const result = await uploadCalendarImage(client, file);
 
     expect(result.path).toBeUndefined();
     expect(result.error).toBe("Invalid image format. Allowed: JPG, PNG, and WebP.");
@@ -28,7 +28,7 @@ describe("uploadCalendarImage", () => {
     const { client, upload } = makeClient();
     const file = new File(["not really a jpeg"], "banner.jpg", { type: "image/jpeg" });
 
-    const result = await uploadCalendarImage(client, file, "school-1");
+    const result = await uploadCalendarImage(client, file);
 
     expect(result.error).toBe("File content does not match its image type.");
     expect(upload).not.toHaveBeenCalled();
@@ -38,10 +38,25 @@ describe("uploadCalendarImage", () => {
     const { client, upload } = makeClient();
     const file = new File([new Uint8Array(JPEG_BYTES)], "banner.jpg", { type: "image/jpeg" });
 
-    const result = await uploadCalendarImage(client, file, "school-1");
+    const result = await uploadCalendarImage(client, file);
 
     expect(result.error).toBeUndefined();
-    expect(result.path).toMatch(/^school-1\/calendar\/\d+_banner\.jpg$/);
+    expect(result.path).toMatch(/^calendar\/\d+_banner\.jpg$/);
+    expect(upload).toHaveBeenCalledWith(
+      result.path,
+      expect.any(Uint8Array),
+      expect.objectContaining({ contentType: "image/jpeg", upsert: false }),
+    );
+  });
+
+  it("uploads achievement images under the achievements folder", async () => {
+    const { client, upload } = makeClient();
+    const file = new File([new Uint8Array(JPEG_BYTES)], "award.jpg", { type: "image/jpeg" });
+
+    const result = await uploadCalendarImage(client, file, "achievements");
+
+    expect(result.error).toBeUndefined();
+    expect(result.path).toMatch(/^achievements\/\d+_award\.jpg$/);
     expect(upload).toHaveBeenCalledWith(
       result.path,
       expect.any(Uint8Array),
@@ -54,7 +69,7 @@ describe("uploadCalendarImage", () => {
     const file = new File([new Uint8Array(PNG_BYTES)], "big.png", { type: "image/png" });
     Object.defineProperty(file, "size", { value: 6 * 1024 * 1024 });
 
-    const result = await uploadCalendarImage(client, file, "school-1");
+    const result = await uploadCalendarImage(client, file);
 
     expect(result.error).toBe("Image exceeds 5MB limit.");
     expect(upload).not.toHaveBeenCalled();
